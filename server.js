@@ -8,7 +8,7 @@ const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "data");
 const SESSION_SECRET = process.env.SESSION_SECRET;
 let users = [];
 try { users = JSON.parse(process.env.USERS_JSON || "[]"); } catch { console.error("USERS_JSON no contiene JSON válido"); }
-if (process.env.NODE_ENV === "production" && (!SESSION_SECRET || SESSION_SECRET.length < 32 || users.length < 3)) { console.error("Configura SESSION_SECRET (32+ caracteres) y USERS_JSON con dos administradores y al menos un usuario de consulta."); process.exit(1); }
+if (process.env.NODE_ENV === "production" && (!SESSION_SECRET || SESSION_SECRET.length < 32 || users.filter(u => u.role === "admin").length < 2)) { console.error("Configura SESSION_SECRET (32+ caracteres) y USERS_JSON con las cuentas de los dos administradores."); process.exit(1); }
 const DB_FILE = path.join(DATA_DIR, "events.json");
 fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(DB_FILE)) fs.writeFileSync(DB_FILE, "[]", "utf8");
@@ -37,7 +37,13 @@ function conflict(candidate, events, ignoreId = null) {
   return events.find(e => e.id !== ignoreId && e.status === "confirmed" &&
     e.date === candidate.date && e.startTime === candidate.startTime);
 }
-app.get("/api/events", auth, (req, res) => res.json(readEvents().sort((a,b) => (a.date+a.startTime).localeCompare(b.date+b.startTime))));
+function publicEvent(e) {
+  return { id:e.id, title:e.title, date:e.date, startTime:e.startTime, venue:e.venue, city:e.city, status:e.status };
+}
+app.get("/api/events", (req, res) => {
+  const events = readEvents().sort((a,b) => (a.date+a.startTime).localeCompare(b.date+b.startTime));
+  res.json(currentUser(req)?.role === "admin" ? events : events.map(publicEvent));
+});
 app.post("/api/events", auth, admin, (req, res) => {
   const b = req.body || {};
   if (!b.title || !validDate(b.date)) return res.status(400).json({error:"Ingresa el nombre del evento y una fecha válida."});
