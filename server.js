@@ -75,37 +75,25 @@ app.delete("/api/events/:id", auth, admin, (req, res) => {
   if (next.length === events.length) return res.status(404).json({error:"Evento no encontrado."});
   writeEvents(next); res.json({ok:true});
 });
-
-// Agrega una sola vez los eventos iniciales solicitados. No reemplaza ni borra eventos existentes.
-function seedRequestedEvents() {
-  const requested = [
-    { title: "Matrimonio Boloman", date: "2026-10-17", city: "Santa Cruz de la Sierra" },
-    { title: "Cumple San Ramón (SC)", date: "2026-10-29", city: "Santa Cruz de la Sierra" },
-    { title: "Burger King", date: "2026-10-30", city: "Sucre" },
-    { title: "Halloween Villazón", date: "2026-10-31", city: "Villazón, Potosí" },
-    { title: "Odontólogos", date: "2026-11-06", city: "Santa Cruz de la Sierra" },
-    { title: "Feria de Potosí", date: "2026-11-07", city: "Potosí" },
-    { title: "Luis Gámez", date: "2026-11-08", city: "Santa Cruz de la Sierra" },
-    { title: "Cristo Rey", date: "2026-11-21", city: "Santa Cruz de la Sierra" },
-    { title: "Warnes", date: "2026-11-26", city: "Warnes, Santa Cruz" },
-    { title: "Matrimonio Miguel", date: "2026-11-28", city: "Santa Cruz de la Sierra" },
-    { title: "Graduación", date: "2026-12-05", city: "Santa Cruz de la Sierra" },
-    { title: "Concepción", date: "2026-12-08", city: "Concepción, Santa Cruz" },
-  ];
-  const existing = readEvents();
-  let changed = false;
-  for (const item of requested) {
-    if (existing.some(e => e.date === item.date && e.title.toLowerCase() === item.title.toLowerCase())) continue;
-    existing.push({
-      id: "evt_seed_" + item.date.replace(/-/g, "") + "_" + Math.random().toString(36).slice(2, 7),
-      title: item.title, date: item.date, startTime: "01:00",
-      venue: "", city: item.city, contact: "", fee: "", notes: "",
-      status: "pending", createdAt: new Date().toISOString()
-    });
-    changed = true;
+// Backup manual protegido: solo administradores autenticados pueden descargar los eventos.
+app.get("/api/admin/backup", auth, admin, (req, res) => {
+  try {
+    const events = readEvents();
+    const backup = {
+      app: "agenda-corona-boliganga",
+      createdAt: new Date().toISOString(),
+      count: events.length,
+      events
+    };
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename=agenda-backup-${stamp}.json`);
+    res.setHeader("Cache-Control", "no-store");
+    res.status(200).send(JSON.stringify(backup, null, 2));
+  } catch (err) {
+    console.error("No se pudo generar la copia de seguridad", err);
+    res.status(500).json({ error: "No se pudo generar la copia de seguridad." });
   }
-  if (changed) writeEvents(existing);
-}
-seedRequestedEvents();
+});
 
 app.listen(PORT, "0.0.0.0", () => console.log(`Agenda musical activa en http://localhost:${PORT}`));
