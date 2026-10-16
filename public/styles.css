@@ -187,3 +187,15 @@ footer{color:#686868;letter-spacing:.12em}
   .day-cell { min-height: 66px; }
   .chip-title, .chip-time, .chip-city { font-size: 7px; }
 }
+
+/* Corrección específica del encabezado en móviles: elimina el sidebar fijo */
+@media (max-width: 620px) {
+  .app-shell { display: block !important; grid-template-columns: minmax(0, 1fr) !important; width: 100% !important; min-width: 0 !important; }
+  .sidebar { width: 100% !important; max-width: none !important; min-width: 0 !important; box-sizing: border-box !important; display: flex !important; flex-direction: column !important; align-items: stretch !important; position: relative !important; }
+  .sidebar nav, .sidebar .nav { width: 100% !important; display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 8px !important; justify-content: flex-start !important; }
+  .sidebar nav a, .sidebar .nav a, .sidebar nav button, .sidebar .nav button { flex: 1 1 130px !important; width: auto !important; box-sizing: border-box !important; justify-content: center !important; }
+  .main { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; }
+  .topbar { width: 100% !important; box-sizing: border-box !important; gap: 10px !important; }
+  .topbar h1 { font-size: clamp(24px, 7vw, 34px) !important; overflow-wrap: anywhere !important; }
+  .topbar > * { max-width: 100% !important; }
+}
