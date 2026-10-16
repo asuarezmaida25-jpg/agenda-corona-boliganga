@@ -5,7 +5,7 @@
 <title>Agenda Musical | Management</title><link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<section id="loginScreen" class="login-screen"><form id="loginForm" class="login-card"><div class="login-mark">CORONA × LA BOLIGANGA</div><h1>Agenda de shows</h1><p>Ingresa con tu cuenta del equipo.</p><label>Usuario<input id="loginUsername" autocomplete="username" required></label><label>Contraseña<input id="loginPassword" type="password" autocomplete="current-password" required></label><div id="loginError" class="form-error hidden"></div><button class="primary" type="submit">Entrar a la agenda</button></form></section>
+<section id="loginScreen" class="login-screen hidden"><form id="loginForm" class="login-card"><div class="login-mark">CORONA × LA BOLIGANGA</div><h1>Agenda de shows</h1><p>Acceso exclusivo para administradores y equipo autorizado.</p><label>Usuario<input id="loginUsername" autocomplete="username" required></label><label>Contraseña<input id="loginPassword" type="password" autocomplete="current-password" required></label><div id="loginError" class="form-error hidden"></div><button class="primary" type="submit">Entrar a la agenda</button><button class="secondary" id="publicViewBtn" type="button">Volver a la vista pública</button></form></section>
 <div class="app-shell hidden" id="appShell">
   <aside class="sidebar">
     <div class="brand"><div class="brand-logo"><img src="/assets/corona-simbolo-blanco.png" alt="Corona"></div><div><b>CORONA</b><span>LA BOLIGANGA · MANAGEMENT</span></div></div>
@@ -16,7 +16,7 @@
     <div class="sidebar-footer">AGENDA DE CONTRATACIONES<br><span>Versión inicial · 1 artista</span></div>
   </aside>
   <main class="main">
-    <header class="topbar"><div><div class="eyebrow">CORONA × LA BOLIGANGA</div><h1 id="pageTitle">Agenda de shows</h1><p class="top-subtitle">Cada fecha cuenta. Cada show, cerrado.</p></div><div class="account-tools"><span id="accountLabel"></span><button class="secondary" id="logoutBtn">Salir</button><button class="primary" id="addBtn">＋ Nuevo evento</button></div></header>
+    <header class="topbar"><div><div class="eyebrow">CORONA × LA BOLIGANGA</div><h1 id="pageTitle">Agenda de shows</h1><p class="top-subtitle">Cada fecha cuenta. Cada show, cerrado.</p></div><div class="account-tools"><span id="accountLabel">Vista pública</span><button class="secondary" id="loginBtn" type="button">Acceso equipo</button><button class="secondary hidden" id="logoutBtn">Salir</button><button class="primary hidden" id="addBtn">＋ Nuevo evento</button></div></header>
     <section class="brand-strip" aria-label="Logos del proyecto">
       <img class="corona-wordmark" src="/assets/corona-blanco.png" alt="Corona">
       <div class="boliganga-wordmark"><span>LA</span><strong>BOLIGANGA</strong><small>MANAGEMENT · MÚSICA · CULTURA</small></div>

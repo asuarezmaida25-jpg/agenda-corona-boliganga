@@ -11,7 +11,8 @@ async function api(url, options={}){const r=await fetch(url,{headers:{"Content-T
 async function load(){try{events=await api("/api/events");render()}catch(e){notify("No se pudo conectar con el servidor.",true)}}
 function showLogin(){$("loginScreen").classList.remove("hidden");$("appShell").classList.add("hidden")}
 function showApp(user=null){currentUser=user;$("loginScreen").classList.add("hidden");$("appShell").classList.remove("hidden");$("accountLabel").textContent=user?`${user.name} · ${user.role==="admin"?"Administrador":"Solo lectura"}`:"Vista pública";$("addBtn").classList.toggle("hidden",user?.role!=="admin");$("logoutBtn").classList.toggle("hidden",!user);$("loginBtn").classList.toggle("hidden",!!user);load()}
-$("publicViewBtn").onclick=()=>showApp(null);\n$("loginForm").addEventListener("submit",async e=>{e.preventDefault();try{const r=await api("/api/login",{method:"POST",body:JSON.stringify({username:$("loginUsername").value.trim(),password:$("loginPassword").value})});$("loginError").classList.add("hidden");showApp(r.user)}catch(err){$("loginError").textContent=err.message;$("loginError").classList.remove("hidden")}});
+$("publicViewBtn").onclick=()=>showApp(null);
+$("loginForm").addEventListener("submit",async e=>{e.preventDefault();try{const r=await api("/api/login",{method:"POST",body:JSON.stringify({username:$("loginUsername").value.trim(),password:$("loginPassword").value})});$("loginError").classList.add("hidden");showApp(r.user)}catch(err){$("loginError").textContent=err.message;$("loginError").classList.remove("hidden")}});
 $("logoutBtn").onclick=async()=>{try{await api("/api/logout",{method:"POST"})}finally{currentUser=null;showApp(null)}};
 $("loginBtn").onclick=()=>showLogin();
 
