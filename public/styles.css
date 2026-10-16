@@ -129,3 +129,15 @@ footer{color:#686868;letter-spacing:.12em}
 }
 .account-tools{display:flex;align-items:center;gap:10px}.account-tools span{font-size:11px;color:var(--muted)}.login-screen{position:fixed;inset:0;z-index:100;background:#080808;display:grid;place-items:center;padding:20px}.login-card{width:min(420px,100%);background:#111;border:1px solid #333;border-radius:16px;padding:30px;color:#f5f5f5;box-shadow:0 20px 80px #0008}.login-mark{font-size:10px;letter-spacing:.18em;color:#aaa;font-weight:800;margin-bottom:18px}.login-card h1{font-size:26px;margin-bottom:8px}.login-card p{color:#aaa;margin-bottom:24px}.login-card label{display:flex;flex-direction:column;gap:7px;margin:14px 0;font-size:12px;color:#ccc}.login-card input{padding:12px;border-radius:8px;border:1px solid #444;background:#080808;color:white;font:inherit}.login-card .primary{width:100%;margin-top:12px}.account-tools .secondary{background:#171717;color:#eee;border-color:#333}@media(max-width:620px){.account-tools{gap:5px;flex-wrap:wrap;justify-content:flex-end}.account-tools span{width:100%;text-align:right;font-size:10px}.account-tools .secondary{padding:8px;font-size:11px}}
 .account-tools{display:flex;align-items:center;gap:10px}.account-tools span{font-size:11px;color:var(--muted)}.login-screen{position:fixed;inset:0;z-index:100;background:#080808;display:grid;place-items:center;padding:20px}.login-card{width:min(420px,100%);background:#111;border:1px solid #333;border-radius:16px;padding:30px;color:#f5f5f5}.login-mark{font-size:10px;letter-spacing:.18em;color:#aaa;font-weight:800;margin-bottom:18px}.login-card h1{font-size:26px;margin-bottom:8px}.login-card p{color:#aaa;margin-bottom:24px}.login-card label{display:flex;flex-direction:column;gap:7px;margin:14px 0;font-size:12px;color:#ccc}.login-card input{padding:12px;border-radius:8px;border:1px solid #444;background:#080808;color:white;font:inherit}.login-card .primary{width:100%;margin-top:12px}.account-tools .secondary{background:#171717;color:#eee;border-color:#333}@media(max-width:620px){.account-tools{gap:5px;flex-wrap:wrap;justify-content:flex-end}.account-tools span{width:100%;text-align:right;font-size:10px}}
+
+/* Mejoras solicitadas: logo Pariente le Aviso y calendario móvil */
+.pariente-logo{width:112px;height:78px;max-width:220px;max-height:78px;object-fit:contain}
+.chip-city{font-size:10px;font-weight:500;opacity:.9;overflow-wrap:anywhere;line-height:1.15}
+@media(max-width:620px){
+ .brand-strip{gap:8px;padding:9px 10px;min-height:74px}
+ .corona-wordmark{width:96px;max-height:36px}
+ .partner-logo{max-width:68px;max-height:40px}
+ .pariente-logo{width:100px;height:58px;max-width:100px;max-height:58px}
+ .event-chip{padding:4px 3px}
+ .chip-city{font-size:8px}
+}
